@@ -3,7 +3,7 @@ const mafengwo = require('./mafengwo')
 
 describe('getAttractions', () => {
   it('should return urls array', () => {
-    return mafengwo.getAttractions(0).then(attractions => {
+    return mafengwo.getAttractions(1).then(attractions => {
       attractions.forEach(item => {
         assert.notEqual(item.match('http://www.mafengwo.cn/poi'), null)
       })
@@ -11,7 +11,7 @@ describe('getAttractions', () => {
   })
 
   it('should return null when overflow', () => {
-    return mafengwo.getAttractions(10000).then(attractions => {
+    return mafengwo.getAttractions(100).then(attractions => {
       assert.equal(attractions, null)
     })
   })
