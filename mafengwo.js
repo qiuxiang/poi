@@ -26,8 +26,10 @@ function getAttractions(page) {
 }
 
 function getAttractionData(url) {
-  return request(url).then(html => {
-    const $ = cheerio.load(html)
+  return Promise.all([
+    request(url), getLocation(url.match(/(\d+).html/)[1])]
+  ).then(values => {
+    const $ = cheerio.load(values[0])
     const $detail = $('.mod-detail dd')
     return {
       name: $('h1').text(),
@@ -40,9 +42,18 @@ function getAttractionData(url) {
       ticket: $detail.eq(1).text().trim(),
       opening_time: $detail.eq(2).text().trim(),
       address: $('.mod-location .sub').text(),
+      latitude: values[1].lat,
+      longitude: values[1].lng,
     }
   })
 }
 
+function getLocation(poi) {
+  return request(
+    `http://www.mafengwo.cn/poi/__pagelet__/pagelet/poiLocationApi?params={"poi_id":"${poi}"}`
+  ).then(data => JSON.parse(data).data.controller_data.poi)
+}
+
 exports.getAttractions = getAttractions
 exports.getAttractionData = getAttractionData
+exports.getLocation = getLocation
