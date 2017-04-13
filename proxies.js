@@ -12,6 +12,9 @@ const servers = [
   'vip12-sgp1-254.ssfq.org',
   'vip12-sgp2-73.ssfq.org',
   'vip12-sgp3-39.ssfq.org',
+  'vip12-hk1-190.ssfq.org',
+  'vip12-hk2-213.ssfq.org',
+  'vip12-hk3-119.ssfq.org',
 ]
 servers.forEach((ip, i) => {
   spawn('sslocal', ['-s', ip, '-p', '24343', '-m', 'rc4-md5', '-k', 'lkjhgfdsa', '-l', 1081 + i])
