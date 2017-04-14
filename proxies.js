@@ -1,21 +1,18 @@
-const spawn = require('child_process').spawn
-const servers = [
-  'vip12-us1-2.ssfq.org',
-  'vip12-us2-137.ssfq.org',
-  'vip12-us3-35.ssfq.org',
-  'vip12-us4-106.ssfq.org',
-  'vip12-us5-106.ssfq.org',
-  'vip12-rb1-84.ssfq.org',
-  'vip12-rb2-152.ssfq.org',
-  'vip12-rb3-101.ssfq.org',
-  'vip12-rb4-233.ssfq.org',
-  'vip12-sgp1-254.ssfq.org',
-  'vip12-sgp2-73.ssfq.org',
-  'vip12-sgp3-39.ssfq.org',
-  'vip12-hk1-190.ssfq.org',
-  'vip12-hk2-213.ssfq.org',
-  'vip12-hk3-119.ssfq.org',
+module.exports = [
+  'http://127.0.0.1:8081',
+  'http://127.0.0.1:8082',
+  'http://127.0.0.1:8083',
+  'http://127.0.0.1:8084',
+  'http://127.0.0.1:8084',
+  // 'http://127.0.0.1:8085',
+  'http://127.0.0.1:8086',
+  'http://127.0.0.1:8087',
+  'http://127.0.0.1:8088',
+  'http://127.0.0.1:8089',
+  'http://127.0.0.1:8090',
+  'http://127.0.0.1:8091',
+  'http://127.0.0.1:8092',
+  'http://127.0.0.1:8093',
+  'http://127.0.0.1:8094',
+  'http://127.0.0.1:8095',
 ]
-servers.forEach((ip, i) => {
-  spawn('sslocal', ['-s', ip, '-p', '24343', '-m', 'rc4-md5', '-k', 'lkjhgfdsa', '-l', 1081 + i])
-})
