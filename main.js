@@ -7,9 +7,13 @@ async function fetchData(url) {
     db.findOne({url: url}, (error, data) => resolve(data))
   )
   if (data === null) {
-    const data = await mafengwo.getAttractionData(url)
-    console.log(data)
-    db.insert(data)
+    try {
+      const data = await mafengwo.getAttractionData(url)
+      console.log(data)
+      db.insert(data)
+    } catch (error) {
+      console.trace(error)
+    }
   }
 }
 

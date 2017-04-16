@@ -1,7 +1,7 @@
-const request = require('request')
+const request = require('request-promise')
 const proxies = require('./proxies')
 
-module.exports = function (options) {
+module.exports = async function (options) {
   if (typeof options === 'string') {
     options = {
       url: options,
@@ -12,13 +12,5 @@ module.exports = function (options) {
   }
   options.timeout = 6000
   options.proxy = proxies[parseInt(Math.random() * proxies.length)]
-  return new Promise((resolve, reject) => {
-    request(options, (error, response, body) => {
-      if (error || response.statusCode === 200) {
-        resolve(body)
-      } else {
-        reject()
-      }
-    })
-  })
+  return request(options)
 }
