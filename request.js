@@ -11,6 +11,12 @@ module.exports = async function (options) {
     'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
   }
   options.timeout = 6000
-  options.proxy = proxies[parseInt(Math.random() * proxies.length)]
-  return request(options)
+  for (let i = 0; i < 10; i += 1) {
+    try {
+      options.proxy = proxies[parseInt(Math.random() * proxies.length)]
+      return await request(options)
+    } catch (error) {
+      console.warn(error.message)
+    }
+  }
 }

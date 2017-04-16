@@ -20,6 +20,7 @@ servers.forEach((ip, i) => {
   spawn('sslocal', ['-s', ip, '-p', '24343', '-m', 'rc4-md5', '-k', 'lkjhgfdsa', '-l', 1081 + i])
   spawn('polipo', [
     'logFile=polipo.log',
+    'diskCacheRoot=',
     'socksParentProxy=127.0.0.1:' + (1081 + i),
     'proxyPort=' + (8081 + i)])
 })

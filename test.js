@@ -38,7 +38,7 @@ describe('mafengwo', function () {
 })
 
 describe('proxies', function () {
-  this.timeout(10000)
+  this.timeout(30000)
 
   it('check remote ip', async () => {
     for (const i in proxies) {
@@ -46,7 +46,7 @@ describe('proxies', function () {
         request({
           url: 'http://ip.cn',
           proxy: proxies[i],
-          timeout: 5000,
+          timeout: 6000,
           headers: {
             'user-agent': 'curl/7.47.0',
           },
