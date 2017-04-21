@@ -1,25 +1,34 @@
 const mafengwo = require('./mafengwo')
+const async = require('async')
 const NeDB = require('nedb')
 const db = new NeDB({filename: 'data.db', autoload: true})
+const queue = async.queue((url, callback) => {
+  db.findOne({url: url}, (error, data) => {
+    if (data) {
+      callback()
+    } else {
+      mafengwo.getAttractionData(url).then(callback)
+    }
+  })
+}, 4)
 
-async function fetchData(url) {
-  const data = await new Promise(resolve =>
-    db.findOne({url: url}, (error, data) => resolve(data))
-  )
-  if (data === null) {
-    const data = await mafengwo.getAttractionData(url)
-    console.log(data.name)
-    db.insert(data)
-  }
+function push(urls) {
+  return new Promise(resolve => queue.push(urls, data => {
+    if (data) {
+      console.log(data.name)
+      db.insert(data)
+    }
+    if (queue.idle()) {
+      resolve()
+    }
+  }))
 }
 
 async function main() {
   for (let page = 1; page <= 63; page += 1) {
-    const attractions = await mafengwo.getAttractions(page)
     console.log(page)
-    for (let i = 0; i < attractions.length; i += 1) {
-      await fetchData(attractions[i])
-    }
+    const attractions = await mafengwo.getAttractions(page)
+    await push(attractions)
   }
 }
 

@@ -19,7 +19,7 @@ module.exports = async function (options) {
       options.proxy = proxies[parseInt(Math.random() * proxies.length)]
       return await request(options)
     } catch (error) {
-      console.warn(error.message)
+      console.warn(options.proxy, error.message)
     }
   }
 }
