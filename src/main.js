@@ -1,6 +1,6 @@
 const mafengwo = require('./mafengwo')
 const NeDB = require('nedb')
-const db = new NeDB({filename: 'database', autoload: true})
+const db = new NeDB({filename: 'data.db', autoload: true})
 
 async function fetchData(url) {
   const data = await new Promise(resolve =>

@@ -1,8 +1,6 @@
 const {describe, it} = require('mocha')
 const assert = require('assert')
-const request = require('request-promise')
-const mafengwo = require('./mafengwo')
-const proxies = require('./proxies').proxies
+const mafengwo = require('../src/mafengwo')
 
 describe('mafengwo', function () {
   this.timeout(6000)
@@ -36,24 +34,5 @@ describe('mafengwo', function () {
       assert(data.city, '泰国')
       assert(data.website, 'http://www.palaces.thai.net/')
     })
-  })
-})
-
-describe('proxies', function () {
-  this.timeout(30000)
-
-  it('check remote ip', async () => {
-    for (const i in proxies) {
-      const body = await request({
-        url: 'http://ip.cn',
-        proxy: proxies[i],
-        timeout: 6000,
-        headers: {
-          'user-agent': 'curl/7.47.0',
-        },
-      })
-      console.log(proxies[i])
-      console.log(body)
-    }
   })
 })
