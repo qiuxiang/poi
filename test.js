@@ -1,7 +1,8 @@
+const {describe, it} = require('mocha')
 const assert = require('assert')
-const mafengwo = require('./mafengwo')
-const proxies = require('./proxies')
 const request = require('request-promise')
+const mafengwo = require('./mafengwo')
+const proxies = require('./proxies').proxies
 
 describe('mafengwo', function () {
   this.timeout(6000)
@@ -32,6 +33,7 @@ describe('mafengwo', function () {
     it('should return data of Grand Palace', async () => {
       const data = await mafengwo.getAttractionData('http://www.mafengwo.cn/poi/14375.html')
       assert(data.name, '大皇宫')
+      assert(data.city, '泰国')
       assert(data.website, 'http://www.palaces.thai.net/')
     })
   })

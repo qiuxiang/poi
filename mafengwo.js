@@ -1,6 +1,10 @@
 const request = require('./request')
 const cheerio = require('cheerio')
 
+/**
+ * @param {number} page
+ * @returns {string[]}
+ */
 async function getAttractions(page) {
   const body = await request({
     url: 'http://www.mafengwo.cn/ajax/router.php',
@@ -23,6 +27,10 @@ async function getAttractions(page) {
   }
 }
 
+/**
+ * @param {string} url
+ * @returns {object}
+ */
 async function getAttractionData(url) {
   const location = await getLocation(url.match(/(\d+).html/)[1])
   const html = await request(url)
@@ -33,6 +41,7 @@ async function getAttractionData(url) {
     name: $('h1').text(),
     name_en: $('.en').text(),
     description: $('.summary').text().replace(/\s+/g, ''),
+    city: $('.drop .hd').text(),
     phone: $('.tel .content').text(),
     website: $('.item-site .content').text(),
     time_cost: $('.item-time .content').text(),
@@ -45,10 +54,14 @@ async function getAttractionData(url) {
   }
 }
 
-async function getLocation(poi) {
+/**
+ * @param {string|number} poi_id
+ * @returns {{lat: number, lng: number}}
+ */
+async function getLocation(poi_id) {
   const response = await request(
-    `http://www.mafengwo.cn/poi/__pagelet__/pagelet/poiLocationApi?params={"poi_id":"${poi}"}`)
-  return JSON.parse(response).data.controller_data.poi
+    `http://www.mafengwo.cn/poi/__pagelet__/pagelet/poiLocationApi?params={"poi_id":"${poi_id}"}`)
+  return JSON.parse(response).data['controller_data']['poi']
 }
 
 exports.getAttractions = getAttractions

@@ -1,6 +1,9 @@
 const request = require('request-promise')
-const proxies = require('./proxies')
+const proxies = require('./proxies').proxies
 
+/**
+ * @returns {string}
+ */
 module.exports = async function (options) {
   if (typeof options === 'string') {
     options = {
