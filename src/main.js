@@ -33,4 +33,3 @@ async function main() {
 }
 
 main()
-// db.find({}, (error, data) => console.log(JSON.stringify(data)))
