@@ -1,7 +1,7 @@
 const mafengwo = require('./mafengwo')
 const async = require('async')
 const NeDB = require('nedb')
-const db = new NeDB({filename: '../output/mafengwo.db', autoload: true})
+const db = new NeDB({filename: 'output/mafengwo.db', autoload: true})
 const queue = async.queue((url, callback) => {
   db.findOne({url: url}, (error, data) => {
     if (data) {
